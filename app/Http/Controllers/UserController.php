@@ -14,11 +14,48 @@ class UserController extends Controller
     }  /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->user->all();
+        $search = strtolower($request->input('search'));
+        if ($search) {
+        $terms = explode(' ', $search);
+        $query = $this->user->query();
+
+        foreach ($terms as $term) {
+            $term = trim($term);
+            if (!empty($term)) {
+                $query->where(function ($q) use ($term) {
+                    $q->whereRaw('LOWER(firstName) LIKE ?', ["%{$term}%"])
+                      ->orWhereRaw('LOWER(lastName) LIKE ?', ["%{$term}%"]);
+                });
+            }
+        }
+
+        // Adiciona uma ordenação baseada na relevância
+        $firstTerm = trim($terms[0]); // usamos o primeiro termo como principal
+        $query->orderByRaw("
+            CASE
+                WHEN LOWER(firstName) LIKE ? THEN 1
+                WHEN LOWER(lastName) LIKE ? THEN 2
+                WHEN LOWER(firstName) LIKE ? THEN 3
+                WHEN LOWER(lastName) LIKE ? THEN 4
+                ELSE 5
+            END
+        ", [
+            "{$firstTerm}%", // começa com
+            "{$firstTerm}%", // começa com
+            "%{$firstTerm}%", // contém
+            "%{$firstTerm}%"
+        ]);
+
+        $users = $query->get();
+        } else {
+            $users = $this->user->all();
+        }
+
         return view('users', ['users' => $users]);
     }
+
 
     /**
      * Show the form for creating a new resource.

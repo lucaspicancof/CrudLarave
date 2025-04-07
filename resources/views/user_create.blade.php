@@ -13,12 +13,12 @@
         <h1 class="mb-4">Cadastrar Novo Usuário</h1>
 
         {{-- Formulário estilizado --}}
-        <form action="{{ route('users.store') }}" method="POST" class="card p-4 shadow-sm">
+        <form class="form-control bg-dark text-light" action="{{ route('users.store') }}" method="POST" class="card p-4 shadow-sm">
             @csrf
 
             <div class="mb-3">
                 <label for="firstName" class="form-label">Primeiro Nome</label>
-                <input type="text" name="firstName" class="form-control" placeholder="Ex: João" required>
+                <input type="text" name="firstName" class="form-control " required pattern="[A-Za-zÀ-ÿ\s]+" placeholder="Ex: João" >
             </div>
 
             <div class="mb-3">
@@ -28,12 +28,12 @@
 
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" name="email" class="form-control" placeholder="email@exemplo.com" required>
+                <input type="email" name="email" class="form-control" required placeholder="email@exemplo.com">
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Senha</label>
-                <input type="password" name="password" class="form-control" placeholder="********" required>
+                <input type="password" name="password" class="form-control" required minlength="8" placeholder="********" >
             </div>
 
             <div class="d-flex justify-content-between">
