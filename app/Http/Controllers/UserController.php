@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user_create');
     }
 
     /**
@@ -33,31 +33,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $created = $this->user->create([
+            'firstName' => $request->input('firstName'),
+            'lastName' => $request->input('lastName'),
+            'email' => $request->input('email'),
+            'password' => password_hash ($request->input('password'), PASSWORD_DEFAULT)
+        ]);
+        if($created){
+                return redirect()->route('users.index')->with('message', 'Usuário cadastrado com sucesso!');
+        }
+            return redirect()->route('users.index')->with('message', 'ERRO: Usuário não cadastrado!');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        return view('user_show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('user_edit', ['user' => $user]);
+    
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updated = $this->user->where('id', $id)->update($request->except(['_token','_method']));
+        if($updated){
+            return redirect()->back()->with('message', 'Usuário atualizado com sucesso!');
+        }
+        return redirect()->back()->with('message', 'ERRO: Usuário não atualizado!');
     }
 
     /**
@@ -65,6 +79,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if ($user && $user->delete()) {
+            return redirect()->route('users.index')->with('message', 'Usuário deletado com sucesso!');
+        }
+        return redirect()->route('users.index')->with('message', 'Erro: Usuário não foi deletado.');
     }
+
 }
