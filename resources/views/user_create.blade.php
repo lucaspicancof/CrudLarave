@@ -8,6 +8,7 @@
             <div class="alert alert-info">
                 {{ session()->get('message') }}
             </div>
+            
         @endif
 
         <h1 class="mb-4">Cadastrar Novo Usuário</h1>
