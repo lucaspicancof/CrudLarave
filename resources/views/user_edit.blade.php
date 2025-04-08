@@ -6,7 +6,7 @@
         {{-- Título da página --}}
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h1>Editar Usuário</h1>
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar para Home</a>
+            <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar</a>
         </div>
 
         {{-- Mensagem de retorno --}}

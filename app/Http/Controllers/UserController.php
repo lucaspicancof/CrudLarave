@@ -52,7 +52,8 @@ class UserController extends Controller
         } else {
             $users = $this->user->all();
         }
-
+        
+    
         return view('users', ['users' => $users]);
     }
 
