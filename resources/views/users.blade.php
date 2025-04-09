@@ -5,9 +5,17 @@
 
         {{-- Mensagem de retorno (ex: sucesso ao cadastrar) --}}
         @if(session()->has('message'))
-            <div class="alert alert-info">
+            <div id="message" class=" alert alert-info">
                 {{ session()->get('message') }}
             </div>
+            <script>
+                setTimeout(() => {
+                    const msg = document.getElementById('message');
+                    if (msg) {
+                        msg.style.display = 'none';
+                    }
+                }, 3000); 
+            </script>
         @endif
 
         {{-- Botão de cadastrar novo usuário --}}

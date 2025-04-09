@@ -8,6 +8,7 @@
             <div class="alert alert-info">
                 {{ session()->get('message') }}
             </div>
+            
         @endif
 
         <h1 class="mb-4">Cadastrar Novo Usuário</h1>
@@ -37,7 +38,7 @@
             </div>
 
             <div class="d-flex justify-content-between">
-                <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar para Home</a>
+                <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar</a>
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             </div>
         </form>

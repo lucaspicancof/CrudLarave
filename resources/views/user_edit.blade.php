@@ -6,7 +6,7 @@
         {{-- Título da página --}}
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h1>Editar Usuário</h1>
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar para Home</a>
+            <a href="{{ route('users.index') }}" class="btn btn-secondary">Voltar</a>
         </div>
 
         {{-- Mensagem de retorno --}}
@@ -17,7 +17,7 @@
         @endif
 
         {{-- Formulário de edição --}}
-        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST" class="card p-4 shadow-sm">
+        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST" class="form-control p-4 shadow-sm bg-dark text-light">
             @csrf
             @method('PUT')
 
@@ -36,7 +36,7 @@
                 <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}" required>
             </div>
 
-            <button type="submit" class="btn btn-success">Atualizar</button>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
     </div>
 @endsection
